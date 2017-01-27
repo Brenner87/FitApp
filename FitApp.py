@@ -1,3 +1,4 @@
+#!/usr/local/bin/python3
 import sqlite3, os
 
 def create_db(db_name):
