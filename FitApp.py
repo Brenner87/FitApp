@@ -14,16 +14,14 @@ def create_db(db_name):
 
 def insert_data(db_name,values):
 	insert_query='INSERT INTO products VALUES (?,?,?,?,?)'
-	#try:
-	con=sqlite3.connect(db_name)
-	cur=con.cursor()
-	cur.execute(insert_query, (values['name'], values['protein'], values['fat'], values['carbohydrate'], values['kcal'],))
-	con.commit()
-	#except Exception:
-	#	print("Was not able to insert prduct "+values['name'])
-	#else:
-	#	print(values[name]+" was successfully inserted")
-
+	try:
+		con=sqlite3.connect(db_name)
+		cur=con.cursor()
+		cur.execute(insert_query, (values['name'], values['protein'], values['fat'], values['carbohydrate'], values['kcal'],))
+		con.commit()
+	except sqlite3.Error as er:
+		print ("er: "+str(er))
+	
 db_name='Products.db'
 
 if not os.path.isfile(db_name): create_db(db_name)
