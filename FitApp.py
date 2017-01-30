@@ -33,11 +33,21 @@ def get_data(db_con,cursor,prod):
 
 def output_product(data):
 	if not data: print("Нет такого продукта: "+prod)
-	else: [print ("Имя: "+str(i[0])+", белки: "+str(i[1])+", жиры: "+str(i[2])+", углеводы: "+str(i[3])) for i in data]
+	else: print ("Имя: "+str(data[0])+", белки: "+str(data[1])+", жиры: "
+		+str(data[2])+", углеводы: "+str(data[3])+", каллорийность: "+str(data[4]))
 	return "Done"
 
 def input_data():
 	pass
+
+
+def calculate(data,mass):
+	print (data)
+	output=[i*mass*0.01  for i in data[0] if isinstance(i,float)]
+	output.insert(0,data[0][0])
+	print (output)
+	return output
+
 
 #================================================================================================================================
 #================================================================================================================================
@@ -45,6 +55,7 @@ def input_data():
 
 db_name='Products.db'
 prod="Творог"
+mass=300
 try:
 	db_con=sqlite3.connect(db_name)
 	cursor=db_con.cursor()
@@ -54,7 +65,8 @@ except Exception as er:
 create_table(db_con,cursor)
 #insert_data(db_con,cursor,{'name':'Творог', 'protein':17, 'fat':5, 'carbohydrate':0,'kcal':80})
 data=get_data(db_con,cursor,prod)
-output_product(data)
+total=calculate(data,mass)
+output_product(total)
 
 
 
