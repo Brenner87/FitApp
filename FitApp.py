@@ -22,7 +22,7 @@ def insert_data(db_con,cursor,values):
 	except Exception as er:	print(er)
 	else: 
 		db_con.commit()
-		print ("Продукт "+values['name']+" успешно добавлен в базу")
+		print ("Продукт {0} успешно добавлен в базу".format(values['name']))
 	return "Done"
 
 def get_data(db_con,cursor,prod):
@@ -33,8 +33,10 @@ def get_data(db_con,cursor,prod):
 
 def output_product(data):
 	if not data: print("Нет такого продукта: "+prod)
-	else: print ("Имя: "+str(data[0])+", белки: "+str(data[1])+", жиры: "
-		+str(data[2])+", углеводы: "+str(data[3])+", каллорийность: "+str(data[4]))
+	else:
+		print ('Имя: {0}, белки: {1}, жиры: {2}, углеводы: {3}, каллорийность: {4}'.format(*data)) 
+		#print ("Имя: "+str(data[0])+", белки: "+str(data[1])+", жиры: "
+		#+str(data[2])+", углеводы: "+str(data[3])+", каллорийность: "+str(data[4]))
 	return "Done"
 
 def input_data():
@@ -63,8 +65,8 @@ except Exception as er:
 	print("Was not able to connet to DB: "+er)
 
 create_table(db_con,cursor)
-#insert_data(db_con,cursor,{'name':'Творог', 'protein':17, 'fat':5, 'carbohydrate':0,'kcal':80})
-data=get_data(db_con,cursor,prod)
+insert_data(db_con,cursor,{'name':'Творог', 'protein':17, 'fat':5, 'carbohydrate':0,'kcal':80})
+#data=get_data(db_con,cursor,prod)
 total=calculate(data,mass)
 output_product(total)
 
