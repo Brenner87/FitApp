@@ -1,5 +1,5 @@
 #!/usr/local/bin/python3
-import sqlite3, os, re 
+import sqlite3, os, re
 	
 def create_table(db_con,cursor):
 	create_query='CREATE TABLE IF NOT EXISTS products(name VARCHAR PRIMARY KEY, protein REAL, fat REAL, carbohydrate REAL, kcal REAL)'
@@ -63,8 +63,8 @@ except Exception as er:
 	print("Was not able to connet to DB: "+er)
 
 create_table(db_con,cursor)
-insert_data(db_con,cursor,{'name':'Творог', 'protein':17, 'fat':5, 'carbohydrate':0,'kcal':80})
-#data=get_data(db_con,cursor,prod)
+#linsert_data(db_con,cursor,{'name':'Творог', 'protein':17, 'fat':5, 'carbohydrate':0,'kcal':80})
+data=get_data(db_con,cursor,prod)
 total=calculate(data,mass)
 output_product(total)
 
