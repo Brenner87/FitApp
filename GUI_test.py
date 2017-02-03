@@ -29,10 +29,12 @@ class Window(QMainWindow):
 		self.home()
 
 	def home(self):
+
 		btn=QtWidgets.QPushButton("Quite",self)
 		btn.clicked.connect(self.close_application)
 		btn.resize(btn.minimumSizeHint())
 		btn.move(0,100)
+
 		extractAction=QtWidgets.QAction(QtGui.QIcon('1486016084_Streamline-83.png'), 'Flee the scene',self)
 		extractAction.triggered.connect(self.close_application)
 		extractAction2=QtWidgets.QAction(QtGui.QIcon('1486016580_Streamline-25.png'), 'Something new',self)
@@ -40,12 +42,53 @@ class Window(QMainWindow):
 		self.toolbar=self.addToolBar("Extraction")
 		self.toolbar.addAction(extractAction)
 		self.toolbar.addAction(extractAction2)
+
+		fontChoice = QtWidgets.QAction(QtGui.QIcon('1486104767_Streamline-27.png'), 'Change fonts', self)
+		fontChoice.triggered.connect(self.font_choice)
+		#self.toolbar = self.addToolBar("Font")
+		self.toolbar.addAction(fontChoice)
+
 		checkBox=QtWidgets.QCheckBox('Enlarge Window',self)
 		checkBox.move(100,25)
 		checkBox.toggle()
 		checkBox.stateChanged.connect(self.enlarge_Window)
+		#PROGRESS BAR
+		self.progress=QtWidgets.QProgressBar(self)
+		self.progress.setGeometry(200,80,250,20)
+		self.btn=QtWidgets.QPushButton("Download",self)
+		self.btn.move(200,120)
+		self.btn.clicked.connect(self.download)
+		#DROPDOWN AND STYLES
+		print (self.style().objectName())
+		self.styleChoice=QtWidgets.QLabel("Windows Vista", self)
+		comboBox=QtWidgets.QComboBox(self)
+		comboBox.addItem("motif")
+		comboBox.addItem("Windows")
+		comboBox.addItem("cde")
+		comboBox.addItem("Plastique")
+		comboBox.addItem("Cleanlooks")
+		comboBox.addItem("windowsvista")
+		comboBox.move(50, 250)
+		self.styleChoice.move(50,150)
+		comboBox.activated[str].connect(self.style_choice)
 		self.show()
 
+
+	def font_choice(self):
+		font, valid=QtWidgets.QFontDialog.getFont()
+		if valid:
+			self.styleChoice.setFont(font)
+
+
+	def style_choice(self, text):
+		self.styleChoice.setText(text)
+		QtWidgets.QApplication.setStyle(QtWidgets.QStyleFactory.create(text))
+
+	def download(self):
+		self.completed=0
+		while self.completed < 100:
+			self.completed+=0.0001
+			self.progress.setValue(self.completed)
 	def enlarge_Window(self, state):
 		if state==QtCore.Qt.Checked:
 			self.setGeometry(50,50,1000,600)
