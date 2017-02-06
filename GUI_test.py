@@ -18,15 +18,28 @@ class Window(QMainWindow):
 		extractAction2.setShortcut("Ctrl+S")
 		extractAction2.setStatusTip('here are you')
 		extractAction2.triggered.connect(self.day_menu)
+
+		openEditor=QtWidgets.QAction("&Editor",self)
+		openEditor.setShortcut("Ctrl+E")
+		openEditor.setStatusTip('Open Editor')
+		openEditor.triggered.connect(self.editor)
+
+
 		self.statusBar()
 		mainMenu=self.menuBar()
 		fileMenu=mainMenu.addMenu('&File')
 		fileMenu.addAction(extractAction)
 		fileMenu.addAction(extractAction2)
+		editorMenu=mainMenu.addMenu("&Editor")
+		editorMenu.addAction(openEditor)
 		#sayMenu=mainMenu.addMenu('&Say')
 		#fileMenu.addAction(extractAction2)
 
 		self.home()
+
+	def editor(self):
+		self.textEdit=QtWidgets.QTextEdit()
+		self.setCentralWidget(self.textEdit)
 
 	def home(self):
 
@@ -47,9 +60,13 @@ class Window(QMainWindow):
 		fontChoice.triggered.connect(self.font_choice)
 		#self.toolbar = self.addToolBar("Font")
 		self.toolbar.addAction(fontChoice)
+		color=QtGui.QColor(0,0,0)
+		fontColor=QtWidgets.QAction('Fonts bg Color',self)
+		fontColor.triggered.connect(self.color_picker)
+		self.toolbar.addAction(fontColor)
 
 		checkBox=QtWidgets.QCheckBox('Enlarge Window',self)
-		checkBox.move(100,25)
+		checkBox.move(300,25)
 		checkBox.toggle()
 		checkBox.stateChanged.connect(self.enlarge_Window)
 		#PROGRESS BAR
@@ -71,8 +88,15 @@ class Window(QMainWindow):
 		comboBox.move(50, 250)
 		self.styleChoice.move(50,150)
 		comboBox.activated[str].connect(self.style_choice)
+		cal=QtWidgets.QCalendarWidget(self)
+		cal.move(500,200)
+		cal.resize(200,200)
 		self.show()
 
+
+	def color_picker(self):
+		color=QtWidgets.QColorDialog.getColor()
+		self.styleChoice.setStyleSheet("QWidget {background-color: %s}" % color.name())
 
 	def font_choice(self):
 		font, valid=QtWidgets.QFontDialog.getFont()
