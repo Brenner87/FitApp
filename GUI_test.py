@@ -14,28 +14,56 @@ class Window(QMainWindow):
 		extractAction.setShortcut("Ctrl+Q")
 		extractAction.setStatusTip('Leave The App')
 		extractAction.triggered.connect(self.close_application)
-		extractAction2=QtWidgets.QAction("&Whisper me something", self)
-		extractAction2.setShortcut("Ctrl+S")
-		extractAction2.setStatusTip('here are you')
-		extractAction2.triggered.connect(self.day_menu)
+
 
 		openEditor=QtWidgets.QAction("&Editor",self)
 		openEditor.setShortcut("Ctrl+E")
 		openEditor.setStatusTip('Open Editor')
 		openEditor.triggered.connect(self.editor)
 
+		openFile=QtWidgets.QAction("&Open File",self)
+		openFile.setShortcut("Ctrl+O")
+		openFile.setStatusTip('Open File')
+		openFile.triggered.connect(self.file_open)
+
+
+		saveFile=QtWidgets.QAction("&Save File",self)
+		saveFile.setShortcut("Ctrl+S")
+		saveFile.setStatusTip('Save File')
+		saveFile.triggered.connect(self.file_save)
 
 		self.statusBar()
 		mainMenu=self.menuBar()
 		fileMenu=mainMenu.addMenu('&File')
 		fileMenu.addAction(extractAction)
-		fileMenu.addAction(extractAction2)
 		editorMenu=mainMenu.addMenu("&Editor")
 		editorMenu.addAction(openEditor)
+
+		fileMenu.addAction(openFile)
+		fileMenu.addAction(saveFile)
+
 		#sayMenu=mainMenu.addMenu('&Say')
 		#fileMenu.addAction(extractAction2)
 
 		self.home()
+
+
+	def file_save(self):
+		name=QtWidgets.QFileDialog.getSaveFileName(self,'Save File')[0]
+		file=open(name,'w')
+		text=self.textEdit.toPlainText()
+		file.write(text)
+		file.close()
+
+	def file_open(self):
+		name=QtWidgets.QFileDialog.getOpenFileName(self,'Open File')[0]
+		print(name)
+		file=open(name,'r')
+		print(file)
+		self.editor()
+		with file:
+			text=file.read()
+			self.textEdit.setText(text)
 
 	def editor(self):
 		self.textEdit=QtWidgets.QTextEdit()
