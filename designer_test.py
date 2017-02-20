@@ -28,7 +28,9 @@ class Ui_MainWindow(object):
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
-
+        self.announcement = QtWidgets.QLabel("something",MainWindow)
+        self.announcement.move(5,30)
+        self.announcement.resize(400,30)
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
         self.spell_this.clicked.connect(self.get_data)
@@ -39,10 +41,13 @@ class Ui_MainWindow(object):
         self.spell_this.setText(_translate("MainWindow", "Spell this"))
 
 
+
     def get_data(self):
         product_name=self.product_input.text()
         product_waight=self.product_waight.text()
+        text='Name: '+product_name+', Waight: '+str(product_waight)
         print('Name: {0}, Waight: {1}'.format(product_name, product_waight))
+        self.announcement.setText(text)
 
 
 class AppWindow(QtWidgets.QMainWindow):
