@@ -13,6 +13,7 @@ class Ui_MainWindow(object):
         self.spell_this = QtWidgets.QPushButton(self.centralwidget)
         self.spell_this.setGeometry(QtCore.QRect(180, 0, 75, 23))
         self.spell_this.setObjectName("spell_this")
+
         self.product_input = QtWidgets.QLineEdit(self.centralwidget)
         self.product_input.setGeometry(QtCore.QRect(0, 0, 111, 20))
         self.product_input.setObjectName("product_input")
@@ -30,11 +31,18 @@ class Ui_MainWindow(object):
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
+        self.spell_this.clicked.connect(self.get_data)
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.spell_this.setText(_translate("MainWindow", "PushButton"))
+        self.spell_this.setText(_translate("MainWindow", "Spell this"))
+
+
+    def get_data(self):
+        product_name=self.product_input.text()
+        product_waight=self.product_waight.text()
+        print('Name: {0}, Waight: {1}'.format(product_name, product_waight))
 
 
 class AppWindow(QtWidgets.QMainWindow):
