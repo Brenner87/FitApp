@@ -51,7 +51,7 @@ class Board(QFrame):
         super().__init__(parent)
 
         self.initBoard()
- 
+
 
     def initBoard(self):
 
